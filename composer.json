@@ -1,0 +1,22 @@
+{
+    "name": "nfilin/yii2-libs",
+    "homepage": "https://github.com/nfilin/yii2-libs",
+    "version": "1.0.0",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Stanislav Markovskyi",
+            "email": "samarkowski@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.4",
+        "nfilin/libs" : "*",
+        "yiisoft/yii2": ">=2.0"
+    },
+
+    "autoload": {
+        "psr-0": { "Nfilin\\Libs\\Yii": "src/" }
+    }
+}
