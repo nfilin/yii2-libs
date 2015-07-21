@@ -13,8 +13,8 @@
 
     "require": {
         "php": ">=5.4",
-        "nfilin/libs" : "*",
-        "yiisoft/yii2": ">=2.0"
+        "nfilin/libs" : "1.*",
+        "yiisoft/yii2": "2.*"
     },
 
     "autoload": {
