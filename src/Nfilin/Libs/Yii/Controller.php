@@ -20,7 +20,7 @@ abstract class Controller extends YiiController {
     /**
      * @var string Wrapper class for input data
      */
-    protected $inputWrapperClass = '\\zeus\\InputData';
+    protected $inputWrapperClass = '\\Nfilin\\Libs\\InputData';
 
     /**
      * @inheritdoc
