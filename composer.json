@@ -2,6 +2,7 @@
     "name": "nfilin/yii2-libs",
     "homepage": "https://github.com/nfilin/yii2-libs",
     "version": "1.0.0",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
