@@ -98,6 +98,13 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     }
 
     /**
+      * 
+      */
+    public function asList() {
+        return call_user_func([static::listClass(),'create'], $this);
+    }
+
+    /**
      * @inheritdoc
      */
     static function formats() {
