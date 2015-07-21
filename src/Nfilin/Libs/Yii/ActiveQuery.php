@@ -2,7 +2,7 @@
 
 namespace Nfilin\Libs\Yii;
 
-use \yii\db|ActiveQuery as YiiActiveQuery;
+use \yii\db\ActiveQuery as YiiActiveQuery;
 use \yii\db\Connection;
 
 /**
