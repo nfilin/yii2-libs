@@ -30,9 +30,9 @@ class File extends NfilinFile {
 	function generateName() {
 		if(!file_exists($this->tmp_name))
 			return null;
-		$extension = FileHelper::getExtensionsByMimeType($this->type);
-		$extension = empty($extension) ? '' : $extension[0];
-		//throw new InvalidParamException(print_r($extension,true));
+		$finfo = new finfo(FILEINFO_MIME_TYPE);
+		$extension = FileHelper::getExtensionsByMimeType($finfo->buffer(file_get_contents($this->tmp_name,FILEINFO_MIME_TYPE)));
+		$extension = empty($extension) ? '' : $extension[0];\
 		$hash = sha1_file($this->tmp_name);
 		return  "{$hash}.{$this->size}.{$extension}";
 
