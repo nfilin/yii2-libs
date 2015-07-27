@@ -5,6 +5,7 @@ namespace Nfilin\Libs\Yii;
 use Nfilin\Libs\File as NfilinFile;
 use yii\base\InvalidParamException;
 use yii\helpers\FileHelper;
+use finfo;
 
 /**
   * @inheritdoc
