@@ -32,7 +32,7 @@ class File extends NfilinFile {
 			return null;
 		$finfo = new finfo(FILEINFO_MIME_TYPE);
 		$extension = FileHelper::getExtensionsByMimeType($finfo->buffer(file_get_contents($this->tmp_name,FILEINFO_MIME_TYPE)));
-		$extension = empty($extension) ? '' : $extension[0];\
+		$extension = empty($extension) ? '' : $extension[0];
 		$hash = sha1_file($this->tmp_name);
 		return  "{$hash}.{$this->size}.{$extension}";
 
