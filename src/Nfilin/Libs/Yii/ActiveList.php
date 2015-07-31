@@ -144,4 +144,13 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
             throw new InvalidCallException('Unsetting read-only property: ' . get_class($this) . '::' . $name);
         }
     }
+
+    /**
+     */
+    public function merge(ArrayIterator $data){
+        foreach ($data as $key => $value) {
+            $this->offsetSet($key, $value);
+        }
+        return $this;
+    }
 }
