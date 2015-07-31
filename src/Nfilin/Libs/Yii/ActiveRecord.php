@@ -7,6 +7,7 @@ use yii\db\ActiveRecord as YiiAR;
 use yii\db\Expression;
 use yii\db\ActiveQueryInterface;
 use yii\db\BaseActiveRecord;
+use yii\db\IntegrityException;
 
 
 
@@ -135,7 +136,12 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
      * @return integer Number of rows affected by the execution.
      * @see \yii\db\Command::batchInsert
      */
-    static public function batchInsert($columns, $rows) {
-        return self::getDb()->createCommand()->batchInsert(static::tableName(), $columns, $rows)->execute();
+    static public function batchInsert($columns, $rows, $handle_error = false) {
+        try {
+            return self::getDb()->createCommand()->batchInsert(static::tableName(), $columns, $rows)->execute();
+        } catch (IntegrityException $e) {
+            if($handle_error === false)
+                throw $e;                
+        }
     }
 }
