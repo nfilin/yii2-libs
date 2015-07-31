@@ -127,4 +127,15 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     const COLUMN_FORMATS = [
         self::COLUMN_TIMESTAMP => self::FORMAT_TIMESTAMP
     ];	
+
+    /**
+     * Batch insert
+     * @param array $columns The column names
+     * @param array $rows The rows to be batch inserted into the table
+     * @return integer Number of rows affected by the execution.
+     * @see \yii\db\Command::batchInsert
+     */
+    static public function batchInsert($columns, $rows) {
+        return self::getDb()->createCommand()->batchInsert(static::tableName(), $columns, $rows)->execute();
+    }
 }
