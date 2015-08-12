@@ -147,7 +147,7 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
 
     /**
      */
-    public function merge(ArrayIterator $data){
+    public function merge(ArrayIterator $data) {
         foreach ($data as $key => $value) {
             $this->offsetSet($key, $value);
         }
