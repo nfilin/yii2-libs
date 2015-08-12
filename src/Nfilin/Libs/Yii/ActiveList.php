@@ -55,6 +55,7 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
 	 * @inheritdoc
 	 */
     function toArray() {
+        error_log(print_r($this, true));
     	return $this->getArrayCopy();
     }
 

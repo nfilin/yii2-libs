@@ -139,6 +139,7 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     static public function batchInsert($columns, $rows, $handle_error = false) {
         if(empty($rows))
             return false;
+        
         try {
             return self::getDb()->createCommand()->batchInsert(static::tableName(), $columns, $rows)->execute();
         } catch (IntegrityException $e) {
