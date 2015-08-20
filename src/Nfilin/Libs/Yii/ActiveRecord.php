@@ -140,7 +140,7 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
      * Fromaters map
      */
     const COLUMN_FORMATS = [
-        self::COLUMN_TIMESTAMP => self::FORMAT_TIMESTAMP
+        self::COLUMN_TIMESTAMP => self::FORMAT_TIMESTAMP,
         self::COLUMN_POINT => '%s',
     ];	
 
