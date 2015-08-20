@@ -40,7 +40,6 @@ class ActiveQuery extends YiiActiveQuery implements ActiveQueryInterface{
         $modelClass = $this->modelClass;
         $schema = $modelClass::getTableSchema();
         if (empty($this->select))   {
-        	try{
 	            $this->select('*');
 	            foreach ($schema->columns as $column)   {
 	                if (ActiveRecord::isSpatial($column)) {
@@ -48,21 +47,14 @@ class ActiveQuery extends YiiActiveQuery implements ActiveQueryInterface{
 	                    $this->addSelect(["AsText($field) AS $field"]);
 	                }
 	            }
-	        }catch(\Exception $e){
-	        	throw $e;
-	        }
         }
-        else    {
-        	try{
-	            foreach ($this->select as $field)   {
-	                $column = $schema->getColumn($field);
-	                if (ActiveRecord::isSpatial($column)) {
-	                    $this->addSelect(["AsText($field) AS $field"]);
-	                }
-	            }
-	        }catch(\Exception $e){
-	        	throw $e;
-	        }
+        else    {        	
+            foreach ($this->select as $column => $field)   {
+                $column = $schema->getColumn(is_numeric($column) ? $field : $column);
+                if (ActiveRecord::isSpatial($column)) {
+                    $this->addSelect(["AsText($field) AS $field"]);
+                }
+            }
         }
         return parent::prepare($builder);
     }
