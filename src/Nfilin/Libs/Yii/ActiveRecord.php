@@ -148,6 +148,28 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
         self::COLUMN_POINT => ['self','point2array']
     ];
 
+    const COLUMN_BEFORE_SAVE = [
+        self::COLUMN_POINT => ['self','array2point']
+    ];
+
+    public function beforeSave($insert)    {
+        $constWrappers = self::COLUMN_BEFORE_SAVE;
+        foreach (static::formats() as $column => $format) {
+            if(!empty($constWrappers[$format]) && is_callable($constWrappers[$format]))
+                $insert[$column] = call_user_func($constWrappers[$format], $insert[$column]);
+        }
+        return parent::beforeSave($insert);
+    }
+
+    static protected function array2point($val){
+        return json_encode([
+            'type' => 'Feature',
+            'geometry' => [
+                'type' => 'Point',
+                'coordinates' => $val,
+            ],
+        ]);
+    }
     static protected function point2array($val){
             if(empty($val))
                 return null;
