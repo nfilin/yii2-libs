@@ -40,21 +40,29 @@ class ActiveQuery extends YiiActiveQuery implements ActiveQueryInterface{
         $modelClass = $this->modelClass;
         $schema = $modelClass::getTableSchema();
         if (empty($this->select))   {
-            $this->select('*');
-            foreach ($schema->columns as $column)   {
-                if (ActiveRecord::isSpatial($column)) {
-                    $field = $column->name;
-                    $this->addSelect(["AsText($field) AS $field"]);
-                }
-            }
+        	try{
+	            $this->select('*');
+	            foreach ($schema->columns as $column)   {
+	                if (ActiveRecord::isSpatial($column)) {
+	                    $field = $column->name;
+	                    $this->addSelect(["AsText($field) AS $field"]);
+	                }
+	            }
+	        }catch(\Exception $e){
+	        	throw $e;
+	        }
         }
         else    {
-            foreach ($this->select as $field)   {
-                $column = $schema->getColumn($field);
-                if (ActiveRecord::isSpatial($column)) {
-                    $this->addSelect(["AsText($field) AS $field"]);
-                }
-            }
+        	try{
+	            foreach ($this->select as $field)   {
+	                $column = $schema->getColumn($field);
+	                if (ActiveRecord::isSpatial($column)) {
+	                    $this->addSelect(["AsText($field) AS $field"]);
+	                }
+	            }
+	        }catch(\Exception $e){
+	        	throw $e;
+	        }
         }
         return parent::prepare($builder);
     }
