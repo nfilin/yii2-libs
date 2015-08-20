@@ -34,9 +34,6 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
                 case self::COLUMN_TIMESTAMP:
                     static::getTableSchema()->columns[$column]->phpType = 'integer';
                     break;
-                case 'point':
-                    static::getTableSchema()->columns[$column]->phpType = 'integer';
-                    break;
             }
         }
     }
@@ -94,6 +91,15 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
         return $query->select($select);
     }
 
+    public function afterFind(){
+        parent::afterFind();        
+        $constWrappers = self::COLUMN_WRAPPERS;
+        foreach (static::formats() as $column => $format) {
+            if(!empty($constWrappers[$format]) && is_callable($constWrappers[$format]))
+                $this->{$column} = call_user_func($constWrappers[$format], $this->{$column});
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -136,6 +142,18 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     const COLUMN_FORMATS = [
         self::COLUMN_TIMESTAMP => self::FORMAT_TIMESTAMP
     ];	
+
+    const COLUMN_WRAPPERS = [
+        self::COLUMN_POINT => function($val){
+            if(empty($val))
+                return null;
+            try {
+                return json_decode($val)->geometry->coordinates;
+            } catch (\Exception $e) {
+                return null;
+            }
+        },
+    ];
 
     /**
      * Batch insert
