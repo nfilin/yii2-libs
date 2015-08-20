@@ -155,7 +155,7 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
             } catch (\Exception $e) {
                 return null;
             }
-        },
+        }
 
     /**
      * Batch insert
