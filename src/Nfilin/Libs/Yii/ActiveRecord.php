@@ -141,6 +141,7 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
      */
     const COLUMN_FORMATS = [
         self::COLUMN_TIMESTAMP => self::FORMAT_TIMESTAMP
+        self::COLUMN_POINT => '%s',
     ];	
 
     const COLUMN_WRAPPERS = [
