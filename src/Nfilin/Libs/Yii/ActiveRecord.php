@@ -3,7 +3,8 @@
 namespace Nfilin\Libs\Yii;
 
 use Yii;
-use yii\db\ActiveRecord as YiiAR;
+//use yii\db\ActiveRecord as YiiAR;
+use sjaakp\spatial\ActiveRecord as YiiAR;
 use yii\db\Expression;
 use yii\db\ActiveQueryInterface;
 use yii\db\BaseActiveRecord;
@@ -31,6 +32,9 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
         foreach ($formats as $column => $format) {
             switch($format){
                 case self::COLUMN_TIMESTAMP:
+                    static::getTableSchema()->columns[$column]->phpType = 'integer';
+                    break;
+                case 'point':
                     static::getTableSchema()->columns[$column]->phpType = 'integer';
                     break;
             }
@@ -121,6 +125,10 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
      * Timestamp formater name
      */
     const COLUMN_TIMESTAMP = 'timestamp';
+
+    const COLUMN_POINT = 'point';
+
+
 
     /**
      * Fromaters map

@@ -2,8 +2,9 @@
 
 namespace Nfilin\Libs\Yii;
 
-use \yii\db\ActiveQuery as YiiActiveQuery;
-use \yii\db\Connection;
+//use yii\db\ActiveQuery as YiiActiveQuery;
+use sjaakp\spatial\ActiveQuery as YiiActiveQuery;
+use yii\db\Connection;
 
 /**
  * @inheritdoc
