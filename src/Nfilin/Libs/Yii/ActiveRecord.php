@@ -144,7 +144,10 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     ];	
 
     const COLUMN_WRAPPERS = [
-        self::COLUMN_POINT => function($val){
+        self::COLUMN_POINT => ['self','point2array']
+    ];
+
+    static protected function point2array($val){
             if(empty($val))
                 return null;
             try {
@@ -153,7 +156,6 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
                 return null;
             }
         },
-    ];
 
     /**
      * Batch insert
