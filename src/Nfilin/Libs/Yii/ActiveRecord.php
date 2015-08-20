@@ -152,11 +152,18 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
         self::COLUMN_POINT => ['self','array2point']
     ];
 
+    protected $__saved = [];
+    
     public function beforeSave($insert)    {
         $constWrappers = self::COLUMN_BEFORE_SAVE;
         foreach (static::formats() as $column => $format) {
-            if(!empty($constWrappers[$format]) && is_callable($constWrappers[$format]))
-                $insert[$column] = call_user_func($constWrappers[$format], $insert[$column]);
+            if(!empty($constWrappers[$format]) && is_callable($constWrappers[$format])){
+                $saved = $this->getAttribute($column);
+                if($saved){                    
+                    $this->_saved[$column] = $saved;
+                    $this->setAttribute($column, call_user_func($constWrappers[$format], $saved));
+                }
+            }
         }
         return parent::beforeSave($insert);
     }
