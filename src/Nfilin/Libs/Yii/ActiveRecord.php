@@ -162,7 +162,7 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
     }
 
     static protected function array2point($val){
-        return json_encode([
+        return empty($val) ? null :  json_encode([
             'type' => 'Feature',
             'geometry' => [
                 'type' => 'Point',
