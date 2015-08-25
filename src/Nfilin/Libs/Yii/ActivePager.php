@@ -11,7 +11,7 @@ use yii\base\InvalidParamException as Exception;
  * Uses [[QueryInterface]] as input data
  */
 class ActivePager extends ZeusPager {
-
+	private $__hooks = [];
 	/**
 	 * @param QueryInterface $query
 	 * @throw Exception If [[$query]] is not [[QueryInterface]]
@@ -22,12 +22,26 @@ class ActivePager extends ZeusPager {
 		$this->query = $query;
 	}
 
+	function each($function, $params = []){
+		$this->__hooks[] = [$function, $params];
+	}
+
 	/**
 	 * @inheritdoc
 	 */
 	function build(){
         $this->total_count  = (int) $this->query->count();
         $this->objects      = $this->query->limit($this->limit)->offset($this->offset)->all()->toArray();
+        foreach ($this->__hooks as $__hook) {
+        	/*if(is_callable($__hook[0])){
+
+        	} else*/
+        	if(count($this->objects) && method_exists($this->objects[0], $__hook[0])) {
+	        	foreach ($this->objects as $key => $object) {
+	        		call_user_func_array([$object, $__hook[0]], $__hook[1]);
+	        	}
+	    	}
+        }
         return $this;
 	}
 }
