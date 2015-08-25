@@ -24,6 +24,7 @@ class ActivePager extends ZeusPager {
 
 	function each($function, $params = []){
 		$this->__hooks[] = [$function, $params];
+		return $this;
 	}
 
 	/**
