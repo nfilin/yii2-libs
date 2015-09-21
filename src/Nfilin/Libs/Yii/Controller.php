@@ -58,8 +58,8 @@ abstract class Controller extends YiiController {
     public function afterAction($action, $result){
     	//print_r($result);
         Yii::$app->response->headers
-            ->add('X-Zeus-Action-Started-At', $this->start_timemark)
-            ->add('X-Zeus-Spent-Time', microtime(true) - $this->start_timemark);
+            ->set('X-Zeus-Action-Started-At', $this->start_timemark)
+            ->set('X-Zeus-Spent-Time', microtime(true) - $this->start_timemark);
         return $result;
     }
 }
