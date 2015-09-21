@@ -23,15 +23,21 @@ abstract class Controller extends YiiController {
     protected $inputWrapperClass = '\\Nfilin\\Libs\\InputData';
 
     /**
+     * @var double Request start timemark
+     */
+    protected $start_timemark;
+
+    /**
      * @inheritdoc
      */
 	public function beforeAction($action) {
 		/*if (!parent::beforeAction($action)) {
             return false;
         }*/
+        $this->start_timemark = microtime(true);
 
-    	$request = Yii::$app->request;
-    	$this->input = new $this->inputWrapperClass();
+        $request = Yii::$app->request;
+        $this->input = new $this->inputWrapperClass();
 
         error_log(print_r([
             $request->getQueryParams(),
@@ -51,6 +57,9 @@ abstract class Controller extends YiiController {
      */
     public function afterAction($action, $result){
     	//print_r($result);
-    	return $result;
+        Yii::$app->response->headers
+            ->add('X-Zeus-Action-Started-At', $this->start_timemark)
+            ->add('X-Zeus-Spent-Time', microtime(true) - $this->start_timemark);
+        return $result;
     }
 }
