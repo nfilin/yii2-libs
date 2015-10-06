@@ -86,11 +86,11 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
         }
         foreach ($columns as $column) {
             if(empty($formats[$column]))
-                $select[] = "`{$table}`.`{$column}`";
+                $select[] = "{$table}.{$column}";
             elseif($formats[$column] == '%s')
                 $select[$column] = new Expression(sprintf($formats[$column], $column));
             else
-                $select[$column] = new Expression(sprintf($formats[$column], "`{$table}`.`{$column}`"));
+                $select[$column] = new Expression(sprintf($formats[$column], "{$table}.{$column}"));
         }
         return $query->select($select);
     }
