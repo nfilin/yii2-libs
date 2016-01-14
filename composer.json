@@ -1,23 +1,30 @@
 {
-    "name": "nfilin/yii2-libs",
-    "homepage": "https://github.com/nfilin/yii2-libs",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Stanislav Markovskyi",
-            "email": "samarkowski@gmail.com"
-        }
-    ],
-
-    "require": {
-        "php": ">=5.4",
-        "nfilin/libs" : "*",
-        "yiisoft/yii2": "2.*",
-	"sjaakp/yii2-spatial": "*"
-    },
-
-    "autoload": {
-        "psr-0": { "Nfilin\\Libs\\Yii": "src/" }
+  "name": "nfilin/yii2-libs",
+  "homepage": "https://github.com/nfilin/yii2-libs",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Stanislav Markovskyi",
+      "email": "samarkowski@gmail.com"
     }
+  ],
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  },
+  "require": {
+    "php": ">=5.4",
+    "nfilin/libs": "1.0.0",
+    "fxp/composer-asset-plugin": "~1.1.1",
+    "yiisoft/yii2": "2.*",
+    "sjaakp/yii2-spatial": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Nfilin\\Libs\\Yii": "src/"
+    }
+  }
 }

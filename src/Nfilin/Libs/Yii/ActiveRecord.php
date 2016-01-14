@@ -195,15 +195,24 @@ abstract class ActiveRecord extends YiiAR implements ActiveRecordInterface{
      * Batch insert
      * @param array $columns The column names
      * @param array $rows The rows to be batch inserted into the table
+     * @param bool|false $handle_error
+     * @param false|bool|string $on_duplicate
      * @return integer Number of rows affected by the execution.
      * @see \yii\db\Command::batchInsert
+     * @throws IntegrityException
      */
-    static public function batchInsert($columns, $rows, $handle_error = false) {
+    static public function batchInsert($columns, $rows, $handle_error = false, $on_duplicate = false) {
         if(empty($rows))
             return false;
         
         try {
-            return self::getDb()->createCommand()->batchInsert(static::tableName(), $columns, $rows)->execute();
+            $command = self::getDb()->createCommand();
+            $sql = $command->db->getQueryBuilder()->batchInsert(static::tableName(), $columns, $rows);
+            if($on_duplicate){
+                $sql .= 'ON DUPLICATE KEY UPDATE '. $on_duplicate;
+            }
+            $command->setSql($sql);
+            return $command->execute();
         } catch (IntegrityException $e) {
             if($handle_error === false)
                 throw $e;                
