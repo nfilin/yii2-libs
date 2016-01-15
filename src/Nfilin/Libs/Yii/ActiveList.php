@@ -3,63 +3,69 @@
 namespace Nfilin\Libs\Yii;
 
 use ArrayIterator;
-use \yii\base;
-use \yii\base\InvalidCallException;
-use \yii\base\UnknownPropertyException;
+use yii\base;
+use yii\base\InvalidCallException;
+use yii\base\UnknownPropertyException;
+use yii\db\ActiveRecord as YiiActiveRecord;
 
 /**
- * 
+ * Class ActiveList
+ * @package Nfilin\Libs\Yii
  */
-class ActiveList extends ArrayIterator implements ActiveListInterface {
+class ActiveList extends ArrayIterator implements ActiveListInterface
+{
 
-	/**
-	 * @param ActiveRecord[]|ActiveRecord|ActiveListInterface $data
-	 * @param int $flags
-	 */
-	function __construct($data = [], $flags = 0){
-		parent::__construct([],$flags);
-		if(is_array($data)){
-			foreach ($data as $value) {
-					if($value instanceof ActiveRecord)
-						$this->append($value);
-				}
-		} elseif( is_object($data)){
-			if($data instanceof ActiveRecordsList){
-				foreach ($data as $value) {
-					if($value instanceof YiiActiveRecord)
-						$this->append($value);
-				}
-			} elseif($data instanceof ActiveRecord) {
-				$this->append($data);
-			}
-		}
-	}
+    /**
+     * @param ActiveRecord[]|ActiveRecord|ActiveListInterface $data
+     * @param int $flags
+     */
+    function __construct($data = [], $flags = 0)
+    {
+        parent::__construct([], $flags);
+        if (is_array($data)) {
+            foreach ($data as $value) {
+                if ($value instanceof ActiveRecord)
+                    $this->append($value);
+            }
+        } elseif (is_object($data)) {
+            if ($data instanceof ActiveListInterface) {
+                foreach ($data as $value) {
+                    if ($value instanceof YiiActiveRecord)
+                        $this->append($value);
+                }
+            } elseif ($data instanceof ActiveRecord) {
+                $this->append($data);
+            }
+        }
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	static function create($data = [], $flags = 0) {
-		return new static($data, $flags);
-	}
+    /**
+     * @inheritdoc
+     */
+    static function create($data = [], $flags = 0)
+    {
+        return new static($data, $flags);
+    }
 
-	/**
+    /**
      * Returns the fully qualified name of this class.
      * @return string the fully qualified name of this class.
-	 */
-	public static function className()
+     */
+    public static function className()
     {
         return get_called_class();
     }
 
     /**
-	 * @inheritdoc
-	 */
-    function toArray() {
-       
-    	return $this->getArrayCopy();
+     * @inheritdoc
+     */
+    function toArray()
+    {
+
+        return $this->getArrayCopy();
     }
 
-	/**
+    /**
      * Returns the value of an object property.
      *
      * Do not call this method directly as it is a PHP magic method that
@@ -104,6 +110,7 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
             throw new UnknownPropertyException('Setting unknown property: ' . get_class($this) . '::' . $name);
         }
     }
+
     /**
      * Checks if a property is set, i.e. defined and not null.
      *
@@ -124,6 +131,7 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
             return false;
         }
     }
+
     /**
      * Sets an object property to null.
      *
@@ -147,8 +155,11 @@ class ActiveList extends ArrayIterator implements ActiveListInterface {
     }
 
     /**
+     * @param ArrayIterator $data
+     * @return $this
      */
-    public function merge(ArrayIterator $data) {
+    public function merge(ArrayIterator $data)
+    {
         foreach ($data as $key => $value) {
             $this->offsetSet($key, $value);
         }

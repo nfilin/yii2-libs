@@ -8,18 +8,19 @@ use yii\db\ActiveQueryInterface as YiiActiveQueryInterface;
 /**
  * @inheritdoc
  */
-interface ActiveQueryInterface extends YiiActiveQueryInterface {
+interface ActiveQueryInterface extends YiiActiveQueryInterface
+{
 
-	/**
-	 * @inheritd
-	 * @return ActiveListInterface
-	 */
-	function populate($rows);
+    /**
+     * @inheritdoc
+     * @return ActiveListInterface
+     */
+    function populate($rows);
 
 
-	/**
-	 * @inheritdoc
-	 */
-	function one($db = null);
+    /**
+     * @inheritdoc
+     */
+    function one($db = null);
 
 }

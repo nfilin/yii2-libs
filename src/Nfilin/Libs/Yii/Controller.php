@@ -8,14 +8,14 @@ use yii\db\Query;
 use Nfilin\Libs\InputData;
 
 /**
-* @inheritdoc
-*/
-abstract class Controller extends YiiController {
-
+ * @inheritdoc
+ */
+abstract class Controller extends YiiController
+{
     /**
      * @var InputData Request data
      */
-	protected $input;
+    protected $input;
 
     /**
      * @var string Wrapper class for input data
@@ -30,24 +30,19 @@ abstract class Controller extends YiiController {
     /**
      * @inheritdoc
      */
-	public function beforeAction($action) {
-		/*if (!parent::beforeAction($action)) {
+    public function beforeAction($action)
+    {
+        if (!parent::beforeAction($action)) {
             return false;
-        }*/
+        }
         $this->start_timemark = microtime(true);
 
         $request = Yii::$app->request;
         $this->input = new $this->inputWrapperClass();
 
-        error_log(print_r([
-            $request->getQueryParams(),
-            $request->getCookies(),
-            $request->getBodyParams(),
-            /*$request*/
-            ],true));
-    	$this->input->mergeWith($request->getQueryParams());
-    	$this->input->mergeWith($request->getCookies());
-    	$this->input->mergeWith($request->getBodyParams());    	
+        $this->input->mergeWith($request->getQueryParams());
+        $this->input->mergeWith($request->getCookies());
+        $this->input->mergeWith($request->getBodyParams());
 
         return true;
     }
@@ -55,8 +50,9 @@ abstract class Controller extends YiiController {
     /**
      * @inheritdoc
      */
-    public function afterAction($action, $result){
-    	//print_r($result);
+    public function afterAction($action, $result)
+    {
+        //print_r($result);
         Yii::$app->response->headers
             ->set('X-Zeus-Action-Started-At', $this->start_timemark)
             ->set('X-Zeus-Spent-Time', microtime(true) - $this->start_timemark);

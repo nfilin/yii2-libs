@@ -2,7 +2,7 @@
 
 namespace Nfilin\Libs\Yii;
 
-use Nfilin\Libs\Pager as ZeusPager; 
+use Nfilin\Libs\Pager as ZeusPager;
 use yii\db\QueryInterface;
 use yii\base\InvalidParamException as Exception;
 
@@ -22,7 +22,12 @@ class ActivePager extends ZeusPager {
 		$this->query = $query;
 	}
 
-	function each($function, $params = []){
+	/**
+	 * @param callable  $function
+	 * @param array $params
+	 * @return $this
+	 */
+	function each(callable $function, $params = []){
 		$this->__hooks[] = [$function, $params];
 		return $this;
 	}
@@ -32,7 +37,7 @@ class ActivePager extends ZeusPager {
 	 */
 	function build(){
         $this->total_count  = (int) $this->query->count();
-        $this->objects      = $this->query->limit($this->limit)->offset($this->offset)->all()->toArray();
+        $this->objects      = $this->query->limit($this->limit)->offset($this->offset)->all()/*->toArray()*/;
         foreach ($this->__hooks as $__hook) {
         	/*if(is_callable($__hook[0])){
 

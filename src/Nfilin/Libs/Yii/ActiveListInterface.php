@@ -3,8 +3,9 @@
 namespace Nfilin\Libs\Yii;
 
 /**
- * 
- */ 
+ * Interface ActiveListInterface
+ * @package Nfilin\Libs\Yii
+ */
 interface ActiveListInterface {
 
 	/**

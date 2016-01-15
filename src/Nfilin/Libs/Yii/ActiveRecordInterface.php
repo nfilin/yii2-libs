@@ -8,9 +8,8 @@ use yii\db\BaseActiveRecord;
 /**
  * @inheritdoc
  */
-interface ActiveRecordInterface extends YiiActiveRecordInterface {
-	
-
+interface ActiveRecordInterface extends YiiActiveRecordInterface
+{
     /**
      * @param string $key
      * @param boolean $visible
@@ -44,7 +43,7 @@ interface ActiveRecordInterface extends YiiActiveRecordInterface {
 
     /**
      */
-    const VISIBILITY_HIDDEN  = false;
+    const VISIBILITY_HIDDEN = false;
 
     /**
      */

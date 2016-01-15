@@ -12,14 +12,13 @@ use yii\db\Connection;
 class ActiveQuery extends YiiActiveQuery implements ActiveQueryInterface{
 
 	/**
-	 * @inheritd
-	 * @return ActiveList
+	 * @param array $rows
+	 * @return array|\yii\db\ActiveRecord[]
 	 */
 	public function populate($rows){
 		$listClass = call_user_func([$this->modelClass, 'listClass']);
 		$rows = parent::populate($rows);
-		$rows = new $listClass($rows);//call_user_func([$listClass,'create'],$rows);
-		//error_log(print_r([$this->modelClass, $listClass,$rows], true));
+		$rows = new $listClass($rows);
 		return $rows;
 	}
 
@@ -33,7 +32,9 @@ class ActiveQuery extends YiiActiveQuery implements ActiveQueryInterface{
 	}
 
 	/**
-	 * 
+	 * @param \yii\db\QueryBuilder $builder
+	 * @return \yii\db\Query
+	 * @throws \yii\base\InvalidConfigException
 	 */
 	public function prepare($builder)    {
         /** @var ActiveRecord $modelClass */
