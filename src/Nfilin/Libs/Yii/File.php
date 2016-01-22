@@ -23,7 +23,7 @@ class File extends NfilinFile
         $this->name = empty($name) ? $this->generateName() : $name;
         $target = FileHelper::normalizePath($dir . '/' . $this->name);
         //throw new \Exception($target);
-        if (!move_uploaded_file($this->tmp_name, $target))
+        if (!rename($this->tmp_name, $target))
             return false;
         $this->tmp_name = $target;
         return true;
