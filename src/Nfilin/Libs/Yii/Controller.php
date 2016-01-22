@@ -17,6 +17,9 @@ abstract class Controller extends YiiController
      */
     protected $input;
 
+
+    public $enableCsrfValidation = false;
+
     /**
      * @var string Wrapper class for input data
      */
@@ -32,9 +35,9 @@ abstract class Controller extends YiiController
      */
     public function beforeAction($action)
     {
-        /*if (!parent::beforeAction((array)$action)) {
+        if (!parent::beforeAction($action)) {
             return false;
-        }*/
+        }
         $this->start_timemark = microtime(true);
 
         $request = Yii::$app->request;
