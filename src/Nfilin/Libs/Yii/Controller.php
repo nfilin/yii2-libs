@@ -32,9 +32,9 @@ abstract class Controller extends YiiController
      */
     public function beforeAction($action)
     {
-        if (!parent::beforeAction((array)$action)) {
+        /*if (!parent::beforeAction((array)$action)) {
             return false;
-        }
+        }*/
         $this->start_timemark = microtime(true);
 
         $request = Yii::$app->request;
