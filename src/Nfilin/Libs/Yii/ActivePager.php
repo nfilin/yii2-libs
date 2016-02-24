@@ -23,11 +23,11 @@ class ActivePager extends ZeusPager {
 	}
 
 	/**
-	 * @param callable  $function
+	 * @param string  $function
 	 * @param array $params
 	 * @return $this
 	 */
-	function each(callable $function, $params = []){
+	function each($function, $params = []){
 		$this->__hooks[] = [$function, $params];
 		return $this;
 	}
