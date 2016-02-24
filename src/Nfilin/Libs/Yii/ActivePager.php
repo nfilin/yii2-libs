@@ -37,6 +37,10 @@ class ActivePager extends ZeusPager {
 	 */
 	function build(){
         $this->total_count  = (int) $this->query->count();
+		if(!$this->total_count){
+			$this->objects = [];
+			return $this;
+		}
         $this->objects      = $this->query->limit($this->limit)->offset($this->offset)->all()/*->toArray()*/;
         foreach ($this->__hooks as $__hook) {
         	/*if(is_callable($__hook[0])){
