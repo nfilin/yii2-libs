@@ -2,6 +2,7 @@
 
 namespace Nfilin\Libs\Yii;
 
+use Nfilin\Libs\File as BaseFile;
 use yii\base\InvalidParamException;
 use yii\web\RequestParserInterface;
 use yii\web\BadRequestHttpException;
@@ -74,11 +75,40 @@ class MultipartParser implements RequestParserInterface
      */
     protected function setParam($key, $value)
     {
-        if ($this->asArray)
-            $this->data[$key] = $value;
-        else
-            $this->data->{$key} = $value;
+        if ($this->asArray) {
+            if(empty($this->data[$key]) || is_scalar($value) || is_scalar($this->data[$key])  || $value instanceof BaseFile) {
+                $this->data[$key] = $value;
+            } else {
+                foreach($value as $_key => $_val){
+                    $this->setSubParam($key, $_key, $_val);
+                }
+            }
+        } else {
+            if(empty($this->data->{$key}) || is_scalar($value) || is_scalar($this->data->{$key})  || $value instanceof BaseFile) {
+                $this->data->{$key} = $value;
+            } else {
+                foreach($value as $_key => $_val){
+                    $this->setSubParam($key, $_key, $_val);
+                }
+            }
+        }
         return $this;
+    }
+
+    protected function setSubParam($pKey, $key, $val){
+        if ($this->asArray) {
+            if(is_array($this->data[$pKey])){
+                $this->data[$pKey][$key] = $val;
+            } else {
+                $this->data[$pKey]->{$key} = $val;
+            }
+        } else {
+            if(is_array($this->data[$pKey])){
+                $this->data->{$pKey}[$key] = $val;
+            } else {
+                $this->data->{$pKey}->{$key} = $val;
+            }
+        }
     }
 
 
